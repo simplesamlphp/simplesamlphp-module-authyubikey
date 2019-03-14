@@ -137,6 +137,9 @@ class YubiKey extends \SimpleSAML\Auth\Source
 
         /* Retrieve the authentication state. */
         $state = \SimpleSAML\Auth\State::loadState($authStateId, self::STAGEID);
+        if (is_null($state)) {
+            throw new \SimpleSAML\Error\NoState();
+        }
 
         /* Find authentication source. */
         Assert::keyExists($state, self::AUTHID);
