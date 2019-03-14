@@ -2,6 +2,8 @@
 
 namespace SimpleSAML\Module\authYubiKey\Auth\Process;
 
+use Webmozart\Assert\Assert;
+
 /*
  * Copyright (C) 2009  Simon Josefsson <simon@yubico.com>.
  *
@@ -56,8 +58,8 @@ class OTP2YubiPrefix extends \SimpleSAML\Auth\ProcessingFilter
      */
     public function process(&$state)
     {
-        assert(is_array($state));
-        assert(array_key_exists('Attributes', $state));
+        Assert::isArray($state);
+        Assert::keyExists($state, 'Attributes');
         $attributes = $state['Attributes'];
 
         \SimpleSAML\Logger::debug('OTP2YubiPrefix: enter with attributes: '.implode(',', array_keys($attributes)));
