@@ -2,6 +2,8 @@
 
 namespace SimpleSAML\Module\authYubiKey\Auth\Source;
 
+use Webmozart\Assert\Assert;
+
 /*
  * Copyright (C) 2009  Andreas Åkre Solberg <andreas.solberg@uninett.no>
  * Copyright (C) 2009  Simon Josefsson <simon@yubico.com>.
@@ -78,8 +80,8 @@ class YubiKey extends \SimpleSAML\Auth\Source
      */
     public function __construct($info, $config)
     {
-        assert(is_array($info));
-        assert(is_array($config));
+        Assert::isArray($info);
+        Assert::isArray($config);
 
         // Call the parent constructor first, as required by the interface
         parent::__construct($info, $config);
@@ -105,7 +107,7 @@ class YubiKey extends \SimpleSAML\Auth\Source
      */
     public function authenticate(&$state)
     {
-        assert(is_array($state));
+        Assert::isArray($state);
 
         // We are going to need the authId in order to retrieve this authentication source later
         $state[self::AUTHID] = $this->authId;
@@ -130,14 +132,14 @@ class YubiKey extends \SimpleSAML\Auth\Source
      */
     public static function handleLogin($authStateId, $otp)
     {
-        assert(is_string($authStateId));
-        assert(is_string($otp));
+        Assert::string($authStateId);
+        Assert::string($otp);
 
         /* Retrieve the authentication state. */
         $state = \SimpleSAML\Auth\State::loadState($authStateId, self::STAGEID);
 
         /* Find authentication source. */
-        assert(array_key_exists(self::AUTHID, $state));
+        Assert::keyExists($state, self::AUTHID);
         $source = \SimpleSAML\Auth\Source::getById($state[self::AUTHID]);
         if ($source === null) {
             throw new \Exception('Could not find authentication source with id '.$state[self::AUTHID]);
@@ -195,7 +197,7 @@ class YubiKey extends \SimpleSAML\Auth\Source
      */
     protected function login($otp)
     {
-        assert(is_string($otp));
+        Assert::string($otp);
 
         require_once dirname(dirname(dirname(dirname(__FILE__)))).'/libextinc/Yubico.php';
 
