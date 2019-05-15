@@ -1,8 +1,8 @@
 {
-    "name": "simplesamlphp/simplesamlphp-module-yubikey",
+    "name": "simplesamlphp/simplesamlphp-module-authyubikey",
     "description": "A module that is able to authenticate against YubiKey",
     "type": "simplesamlphp-module",
-    "keywords": ["simplesamlphp", "yubikey"],
+    "keywords": ["simplesamlphp", "authyubikey"],
     "license": "LGPL-3.0-or-later",
     "authors": [
         {
@@ -36,7 +36,7 @@
         "phpunit/phpunit": "~5.7"
     },
     "support": {
-        "issues": "https://github.com/tvdijen/simplesamlphp-module-yubikey/issues",
-        "source": "https://github.com/tvdijen/simplesamlphp-module-yubikey"
+        "issues": "https://github.com/tvdijen/simplesamlphp-module-authyubikey/issues",
+        "source": "https://github.com/tvdijen/simplesamlphp-module-authyubikey"
     }
 }
