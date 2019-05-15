@@ -16,6 +16,9 @@
             "*": "dist"
         }
     },
+    "extra": {
+        "ssp-mixedcase-module-name": "authYubikey"
+    },
     "autoload": {
         "psr-4": {
             "SimpleSAML\\modules\\yubikey\\": "lib/"
