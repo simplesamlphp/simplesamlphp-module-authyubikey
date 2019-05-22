@@ -23,8 +23,12 @@ if (array_key_exists('otp', $_REQUEST)) {
     // attempt to log in
     $errorCode = \SimpleSAML\Module\authYubiKey\Auth\Source\YubiKey::handleLogin($authStateId, $_REQUEST['otp']);
     $errorCodes = \SimpleSAML\Error\ErrorCodes::getAllErrorCodeMessages();
-    $t->data['errorTitle'] = $errorCodes['title'][$errorCode];
-    $t->data['errorDesc'] = $errorCodes['desc'][$errorCode];
+    if (array_key_exists($errorCode, $errorCodes['title'])) {
+        $t->data['errorTitle'] = $errorCodes['title'][$errorCode];
+    }
+    if (array_key_exists($errorCode, $errorCodes['desc'])) {
+        $t->data['errorDesc'] = $errorCodes['desc'][$errorCode];
+    }
 }
 
 $t->data['header'] = $translator->t('{authYubiKey:yubikey:header}');

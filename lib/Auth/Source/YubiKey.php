@@ -141,6 +141,8 @@ class YubiKey extends \SimpleSAML\Auth\Source
 
         /* Find authentication source. */
         assert(array_key_exists(self::AUTHID, $state));
+
+        /** @var \SimpleSAML\Module\authYubiKey\Auth\Source\YubiKey $source */
         $source = \SimpleSAML\Auth\Source::getById($state[self::AUTHID]);
         if ($source === null) {
             throw new \Exception('Could not find authentication source with id '.$state[self::AUTHID]);
