@@ -2,11 +2,11 @@
 {% extends "base.twig" %}
 
 {% block preload %}
-    <link rel="stylesheet" href="/{{ baseurlpath }}module.php/authYubiKey/assets/css/yubikey.css">
+    <link rel="stylesheet" href="{{ asset('css/yubikey.css', 'authyubikey') }}">
 {% endblock %}
 
 {% block postload %}
-    <script src="/{{ baseurlpath }}module.php/authYubiKey/assets/js/autofocus.js"></script>
+    <script src="{{ asset('js/autofocus.js', 'authyubikey') }}"></script>
 {% endblock %}
 
 {% block content %}
