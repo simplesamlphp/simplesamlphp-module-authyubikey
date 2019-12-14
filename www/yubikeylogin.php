@@ -18,7 +18,7 @@ $globalConfig = \SimpleSAML\Configuration::getInstance();
 $t = new \SimpleSAML\XHTML\Template($globalConfig, 'authYubiKey:yubikeylogin.php');
 $translator = $t->getTranslator();
 
-$errorCode = [];
+$errorCode = null;
 if (array_key_exists('otp', $_REQUEST)) {
     // attempt to log in
     $errorCode = \SimpleSAML\Module\authYubiKey\Auth\Source\YubiKey::handleLogin($authStateId, $_REQUEST['otp']) ?: $errorCode;
