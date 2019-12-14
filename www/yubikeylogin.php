@@ -21,7 +21,7 @@ $translator = $t->getTranslator();
 $errorCode = null;
 if (array_key_exists('otp', $_REQUEST)) {
     // attempt to log in
-    $errorCode = \SimpleSAML\Module\authYubiKey\Auth\Source\YubiKey::handleLogin($authStateId, $_REQUEST['otp']) ?: $errorCode;
+    $errorCode = \SimpleSAML\Module\authYubiKey\Auth\Source\YubiKey::handleLogin($authStateId, $_REQUEST['otp']);
     $errorCodes = \SimpleSAML\Error\ErrorCodes::getAllErrorCodeMessages();
     if (array_key_exists($errorCode, $errorCodes['title'])) {
         $t->data['errorTitle'] = $errorCodes['title'][$errorCode];
