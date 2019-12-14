@@ -28,5 +28,12 @@
         <MissingParamType errorLevel="info" />
         <UnusedClass errorLevel="info" />
         <PossiblyUnusedMethod errorLevel="info" />
+
+        <!-- Ignore InvalidClass -->
+        <InvalidClass>
+            <errorLevel type="suppress">
+                <file name="www/yubikeylogin.php" />
+            </errorLevel>
+        </InvalidClass>
     </issueHandlers>
 </psalm>

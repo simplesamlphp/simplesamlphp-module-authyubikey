@@ -1,4 +1,4 @@
-{% set pagetitle = header|trans %}
+{% set pagetitle = '{authYubiKey:yubikey:header}'|trans %}
 {% extends "base.twig" %}
 
 {% block preload %}
@@ -17,10 +17,10 @@
     </div>
     {% endif %}
 
-    <img style="float: right" src="{{ logoUrl }}" alt="">
-    <img style="clear: right; float: right" src="{{ devicepicUrl }}" alt="YubiKey">
+    <img id="authyubikey_logo" src="{{ asset('img/logo.jpg', 'authyubikey') }}" alt="">
+    <img id="yubikey" src="{{ asset('img/yubikey.jpg', 'authyubikey') }}" alt="YubiKey">
 
-    <h2>{{ '{authYubiKey:yubikey:header}'|trans }}</h2>
+    <h2>{{ pagetitle }}</h2>
     <form action="?" method="post" name="f">
         <p>{{ '{authYubiKey:yubikey:intro}'|trans }}</p>
         <p><input id="otp" type="text" tabindex="2" name="otp" autofocus></p>

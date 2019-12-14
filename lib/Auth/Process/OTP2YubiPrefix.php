@@ -2,6 +2,8 @@
 
 namespace SimpleSAML\Module\authYubiKey\Auth\Process;
 
+use SimpleSAML\Auth;
+use SimpleSAML\Logger;
 use Webmozart\Assert\Assert;
 
 /*
@@ -47,7 +49,7 @@ use Webmozart\Assert\Assert;
  *
  */
 
-class OTP2YubiPrefix extends \SimpleSAML\Auth\ProcessingFilter
+class OTP2YubiPrefix extends Auth\ProcessingFilter
 {
     /**
      * Filter out YubiKey 'otp' attribute and replace it with
@@ -56,13 +58,12 @@ class OTP2YubiPrefix extends \SimpleSAML\Auth\ProcessingFilter
      * @param array &$state  The state we should update.
      * @return void
      */
-    public function process(&$state)
+    public function process(array &$state): void
     {
-        Assert::isArray($state);
         Assert::keyExists($state, 'Attributes');
         $attributes = $state['Attributes'];
 
-        \SimpleSAML\Logger::debug('OTP2YubiPrefix: enter with attributes: '.implode(',', array_keys($attributes)));
+        Logger::debug('OTP2YubiPrefix: enter with attributes: ' . implode(',', array_keys($attributes)));
 
         $otps = $attributes['otp'];
         $otp = $otps['0'];
@@ -72,12 +73,13 @@ class OTP2YubiPrefix extends \SimpleSAML\Auth\ProcessingFilter
 
         $attributes['yubiPrefix'] = [$identity];
 
-        \SimpleSAML\Logger::info(
-            'OTP2YubiPrefix: otp: '.$otp.' identity: '.$identity.' (otp keys: '.implode(',', array_keys($otps)).')'
+        Logger::info(
+            'OTP2YubiPrefix: otp: ' . $otp . ' identity: ' . $identity . ' (otp keys: '
+            . implode(',', array_keys($otps)) . ')'
         );
 
         unset($attributes['otp']);
 
-        \SimpleSAML\Logger::debug('OTP2YubiPrefix: leaving with attributes: '.implode(',', array_keys($attributes)));
+        Logger::debug('OTP2YubiPrefix: leaving with attributes: ' . implode(',', array_keys($attributes)));
     }
 }

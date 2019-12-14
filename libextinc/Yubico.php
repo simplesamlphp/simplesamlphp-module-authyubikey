@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Class for verifying Yubico One-Time-Passcodes
  *
@@ -58,10 +59,6 @@
  */
 class Auth_Yubico
 {
-    /**#@+
-     * @access private
-     */
-
     /**
      * Yubico client ID
      * @var string
@@ -88,7 +85,7 @@ class Auth_Yubico
      * @param string $key   The client MAC key (optional)
      * @access public
      */
-    public function __construct($id, $key = '')
+    public function __construct(string $id, string $key = '')
     {
         $this->id = $id;
         $this->key = base64_decode($key);
@@ -100,7 +97,7 @@ class Auth_Yubico
      * @return string Output from server.
      * @access public
      */
-    public function getLastResponse()
+    public function getLastResponse(): string
     {
         return $this->response;
     }
@@ -114,16 +111,16 @@ class Auth_Yubico
      * @return mixed            PEAR error on error, true otherwise
      * @access public
      */
-    public function verify($token)
+    public function verify(string $token)
     {
-        $parameters = "id=".$this->id."&otp=".$token;
+        $parameters = "id=" . $this->id . "&otp=" . $token;
         // Generate signature
-        if ($this->key <> "") {
+        if ($this->key !== "") {
             $signature = base64_encode(hash_hmac('sha1', $parameters, $this->key, true));
-            $parameters .= '&h='.$signature;
+            $parameters .= '&h=' . $signature;
         }
         // Support https
-        $url = "https://api.yubico.com/wsapi/verify?".$parameters;
+        $url = "https://api.yubico.com/wsapi/verify?" . $parameters;
 
         /** @var string $responseMsg */
         $responseMsg = \SimpleSAML\Utils\HTTP::fetch($url);
@@ -146,7 +143,7 @@ class Auth_Yubico
                 $response[$row[0]] = (isset($row[1])) ? $row[1] : "";
             }
 
-            $check = 'status='.$response['status'].'&t='.$response['t'];
+            $check = 'status=' . $response['status'] . '&t=' . $response['t'];
             $checksignature = base64_encode(hash_hmac('sha1', $check, $this->key, true));
 
             if ($response['h'] != $checksignature) {
@@ -155,7 +152,7 @@ class Auth_Yubico
         }
 
         if ($status != 'OK') {
-            throw new Exception('Status was not OK: '.$status);
+            throw new Exception('Status was not OK: ' . $status);
         }
 
         return true;

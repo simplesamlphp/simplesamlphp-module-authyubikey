@@ -2,6 +2,12 @@
 
 namespace SimpleSAML\Module\authYubiKey\Auth\Source;
 
+use Exception;
+use SimpleSAML\Auth;
+use SimpleSAML\Error;
+use SimpleSAML\Logger;
+use SimpleSAML\Module;
+use SimpleSAML\Utils;
 use Webmozart\Assert\Assert;
 
 /*
@@ -44,23 +50,23 @@ use Webmozart\Assert\Assert;
  * @package SimpleSAMLphp
  */
 
-class YubiKey extends \SimpleSAML\Auth\Source
+class YubiKey extends Auth\Source
 {
     /**
      * The string used to identify our states.
      */
-    const STAGEID = '\SimpleSAML\Module\authYubiKey\Auth\Source\YubiKey.state';
+    public const STAGEID = '\SimpleSAML\Module\authYubiKey\Auth\Source\YubiKey.state';
 
     /**
      * The number of characters of the OTP that is the secure token.
      * The rest is the user id.
      */
-    const TOKENSIZE = 32;
+    public const TOKENSIZE = 32;
 
     /**
      * The key of the AuthId field in the state.
      */
-    const AUTHID = '\SimpleSAML\Module\authYubiKey\Auth\Source\YubiKey.AuthId';
+    public const AUTHID = '\SimpleSAML\Module\authYubiKey\Auth\Source\YubiKey.AuthId';
 
     /**
      * The client id/key for use with the Auth_Yubico PHP module.
@@ -78,11 +84,8 @@ class YubiKey extends \SimpleSAML\Auth\Source
      * @param array $info  Information about this authentication source.
      * @param array $config  Configuration.
      */
-    public function __construct($info, $config)
+    public function __construct(array $info, array $config)
     {
-        Assert::isArray($info);
-        Assert::isArray($config);
-
         // Call the parent constructor first, as required by the interface
         parent::__construct($info, $config);
 
@@ -105,16 +108,14 @@ class YubiKey extends \SimpleSAML\Auth\Source
      * @param array &$state  Information about the current authentication.
      * @return void
      */
-    public function authenticate(&$state)
+    public function authenticate(array &$state): void
     {
-        Assert::isArray($state);
-
         // We are going to need the authId in order to retrieve this authentication source later
         $state[self::AUTHID] = $this->authId;
 
-        $id = \SimpleSAML\Auth\State::saveState($state, self::STAGEID);
-        $url = \SimpleSAML\Module::getModuleURL('authYubiKey/yubikeylogin.php');
-        \SimpleSAML\Utils\HTTP::redirectTrustedURL($url, ['AuthState' => $id]);
+        $id = Auth\State::saveState($state, self::STAGEID);
+        $url = Module::getModuleURL('authYubiKey/yubikeylogin.php');
+        Utils\HTTP::redirectTrustedURL($url, ['AuthState' => $id]);
     }
 
 
@@ -128,32 +129,29 @@ class YubiKey extends \SimpleSAML\Auth\Source
      *
      * @param string $authStateId  The identifier of the authentication state.
      * @param string $otp  The one time password entered-
-     * @return string Error code in the case of an error.
+     * @return string|void Error code in the case of an error.
      */
-    public static function handleLogin($authStateId, $otp)
+    public static function handleLogin(string $authStateId, string $otp)
     {
-        Assert::string($authStateId);
-        Assert::string($otp);
-
         /* Retrieve the authentication state. */
-        $state = \SimpleSAML\Auth\State::loadState($authStateId, self::STAGEID);
+        $state = Auth\State::loadState($authStateId, self::STAGEID);
         if (is_null($state)) {
-            throw new \SimpleSAML\Error\NoState();
+            throw new Error\NoState();
         }
 
         /* Find authentication source. */
         Assert::keyExists($state, self::AUTHID);
 
         /** @psalm-var \SimpleSAML\Module\authYubiKey\Auth\Source\YubiKey|null $source */
-        $source = \SimpleSAML\Auth\Source::getById($state[self::AUTHID]);
+        $source = Auth\Source::getById($state[self::AUTHID]);
         if ($source === null) {
-            throw new \Exception('Could not find authentication source with id '.$state[self::AUTHID]);
+            throw new Exception('Could not find authentication source with id ' . $state[self::AUTHID]);
         }
 
         try {
             /* Attempt to log in. */
             $attributes = $source->login($otp);
-        } catch (\SimpleSAML\Error\Error $e) {
+        } catch (Error\Error $e) {
             /* An error occurred during login. Check if it is because of the wrong
              * username/password - if it is, we pass that error up to the login form,
              * if not, we let the generic error handler deal with it.
@@ -169,7 +167,9 @@ class YubiKey extends \SimpleSAML\Auth\Source
         }
 
         $state['Attributes'] = $attributes;
-        \SimpleSAML\Auth\Source::completeAuth($state);
+        Auth\Source::completeAuth($state);
+
+        assert(false);
     }
 
 
@@ -179,7 +179,7 @@ class YubiKey extends \SimpleSAML\Auth\Source
      * @param string $otp
      * @return string
      */
-    public static function getYubiKeyPrefix($otp)
+    public static function getYubiKeyPrefix(string $otp): string
     {
         $uid = substr($otp, 0, strlen($otp) - self::TOKENSIZE);
         return $uid;
@@ -198,26 +198,26 @@ class YubiKey extends \SimpleSAML\Auth\Source
      * @param string $otp
      * @return array Associative array with the users attributes.
      */
-    protected function login($otp)
+    protected function login(string $otp): array
     {
-        Assert::string($otp);
+        require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/libextinc/Yubico.php';
 
-        require_once dirname(dirname(dirname(dirname(__FILE__)))).'/libextinc/Yubico.php';
-
+        $yubi = new \Auth_Yubico($this->yubi_id, $this->yubi_key);
         try {
-            $yubi = new \Auth_Yubico($this->yubi_id, $this->yubi_key);
             $yubi->verify($otp);
             $uid = self::getYubiKeyPrefix($otp);
             $attributes = ['uid' => [$uid]];
-        } catch (\Exception $e) {
-            \SimpleSAML\Logger::info(
-                'YubiKey:'.$this->authId.': Validation error (otp '.$otp.'), debug output: '.$yubi->getLastResponse()
+        } catch (Exception $e) {
+            Logger::info(
+                'YubiKey:' . $this->authId . ': Validation error (otp ' . $otp . '), debug output: '
+                . $yubi->getLastResponse()
             );
-            throw new \SimpleSAML\Error\Error('WRONGUSERPASS', $e);
+            throw new Error\Error('WRONGUSERPASS', $e);
         }
 
-        \SimpleSAML\Logger::info(
-            'YubiKey:'.$this->authId.': YubiKey otp '.$otp.' validated successfully: '.$yubi->getLastResponse()
+        Logger::info(
+            'YubiKey:' . $this->authId . ': YubiKey otp ' . $otp . ' validated successfully: '
+            . $yubi->getLastResponse()
         );
         return $attributes;
     }

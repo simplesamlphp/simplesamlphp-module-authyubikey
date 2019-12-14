@@ -5,3 +5,12 @@ input#otp {
     width: 70%;
     color: #aaa;
 }
+
+img#authyubikey_logo {
+    float: right;
+}
+
+img#yubikey {
+    clear: right;
+    float: right;
+}
