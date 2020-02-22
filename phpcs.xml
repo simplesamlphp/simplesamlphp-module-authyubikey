@@ -15,7 +15,7 @@
     <rule ref="PSR12"/>
 
     <!-- Ignore files with side effects that we cannot fix -->
-    <rule ref="PSR1.Files.SideEffects">
+    <rule ref="PSR1.Classes.ClassDeclaration">
         <exclude-pattern>libextinc/Yubico.php</exclude-pattern>
     </rule>
 
