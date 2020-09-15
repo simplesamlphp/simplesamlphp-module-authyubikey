@@ -106,7 +106,6 @@ class YubiKey extends Auth\Source
      * login page.
      *
      * @param array &$state  Information about the current authentication.
-     * @return void
      */
     public function authenticate(array &$state): void
     {
