@@ -16,15 +16,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.3.4\n"
 
-msgid "{authYubiKey:yubikey:intro}"
-msgstr ""
-"Neki od servisa je zatražio da se autentificirate. Da biste se "
-"autentificirali pritisnite gumb na vašem YubiKey uređaju. Nakon toga bi u"
-" polje ispod trebala biti automatski upisana jednokratna zaporka."
-
-msgid "{authYubiKey:yubikey:header}"
-msgstr "Prijavite se pomoću YubiKey-a"
-
 msgid ""
 "Some service requested authentication. To authenticate, click the button "
 "on your YubiKey. The field below should then automatically be filled out "

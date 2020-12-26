@@ -1,4 +1,4 @@
-{% set pagetitle = '{authYubiKey:yubikey:header}'|trans %}
+{% set pagetitle = 'Login with YubiKey'|trans %}
 {% extends "base.twig" %}
 
 {% block preload %}
@@ -22,7 +22,7 @@
 
     <h2>{{ pagetitle }}</h2>
     <form action="?" method="post" name="f">
-        <p>{{ '{authYubiKey:yubikey:intro}'|trans }}</p>
+        <p>{{ 'Some service requested authentication. To authenticate, click the button on your YubiKey. The field below should then automatically be filled out with a secure one-time-password.'|trans }}</p>
         <p><input id="otp" type="text" tabindex="2" name="otp" autofocus></p>
     {% for key, value in stateParams %}
         <input type="hidden" name="{{ key|escape('html') }}" value="{{ value|escape('html') }}">

@@ -15,15 +15,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.3.4\n"
 
-msgid "{authYubiKey:yubikey:intro}"
-msgstr ""
-"Un servizio ha richiesto l'autenticazione. Per autenticarsi, premere il "
-"pulsante sulla propria YukiKey. Il campo sottostante dovrebbe essere "
-"automaticamente riempito con una password usa e getta."
-
-msgid "{authYubiKey:yubikey:header}"
-msgstr "Connessione con YubiKey"
-
 msgid ""
 "Some service requested authentication. To authenticate, click the button "
 "on your YubiKey. The field below should then automatically be filled out "

@@ -15,12 +15,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.3.4\n"
 
-msgid "{authYubiKey:yubikey:intro}"
-msgstr "有些服務需要經過驗證，請點選 YubiKey 按鈕來進行驗證。接下來的字串應該要被自動地填寫入加密之一次性密碼(OTP)。"
-
-msgid "{authYubiKey:yubikey:header}"
-msgstr "使用 YubiKey 登入"
-
 msgid ""
 "Some service requested authentication. To authenticate, click the button "
 "on your YubiKey. The field below should then automatically be filled out "
