@@ -3,12 +3,12 @@
 namespace SimpleSAML\Module\authYubiKey\Auth\Source;
 
 use Exception;
+use SimpleSAML\Assert\Assert;
 use SimpleSAML\Auth;
 use SimpleSAML\Error;
 use SimpleSAML\Logger;
 use SimpleSAML\Module;
 use SimpleSAML\Utils;
-use Webmozart\Assert\Assert;
 
 /*
  * Copyright (C) 2009  Andreas Åkre Solberg <andreas.solberg@uninett.no>
@@ -141,11 +141,13 @@ class YubiKey extends Auth\Source
         /* Find authentication source. */
         Assert::keyExists($state, self::AUTHID);
 
-        /** @psalm-var \SimpleSAML\Module\authYubiKey\Auth\Source\YubiKey|null $source */
         $source = Auth\Source::getById($state[self::AUTHID]);
-        if ($source === null) {
-            throw new Exception('Could not find authentication source with id ' . $state[self::AUTHID]);
-        }
+        Assert::isInstanceOf(
+            $source,
+            YubiKey::class,
+            'Could not find authentication source with id ' . $state[self::AUTHID]
+        );
+        /** @var \SimpleSAML\Module\authYubiKey\Auth\Source\YubiKey $source */
 
         try {
             /* Attempt to log in. */
