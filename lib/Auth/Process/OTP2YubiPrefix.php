@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimpleSAML\Module\authYubiKey\Auth\Process;
 
+use SimpleSAML\Assert\Assert;
 use SimpleSAML\Auth;
 use SimpleSAML\Logger;
-use Webmozart\Assert\Assert;
 
 /*
  * Copyright (C) 2009  Simon Josefsson <simon@yubico.com>.
