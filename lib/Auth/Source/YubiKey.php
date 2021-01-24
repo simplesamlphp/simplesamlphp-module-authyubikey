@@ -147,10 +147,13 @@ class YubiKey extends Auth\Source
             YubiKey::class,
             'Could not find authentication source with id ' . $state[self::AUTHID]
         );
-        /** @var \SimpleSAML\Module\authYubiKey\Auth\Source\YubiKey $source */
 
         try {
-            /* Attempt to log in. */
+            /**
+             * Attempt to log in.
+             *
+             * @var \SimpleSAML\Module\authYubiKey\Auth\Source\YubiKey $source
+             */
             $attributes = $source->login($otp);
         } catch (Error\Error $e) {
             /* An error occurred during login. Check if it is because of the wrong

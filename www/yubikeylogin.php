@@ -8,6 +8,8 @@
  * @package SimpleSAMLphp
  */
 
+namespace SimpleSAML\Module\authyubikey;
+
 use SimpleSAML\Configuration;
 use SimpleSAML\Error;
 use SimpleSAML\Module;
