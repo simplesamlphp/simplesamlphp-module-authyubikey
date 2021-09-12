@@ -1,6 +1,6 @@
 <?php
 
-namespace SimpleSAML\Module\authYubiKey\Auth\Source;
+namespace SimpleSAML\Module\authYubikey\Auth\Source;
 
 use Exception;
 use SimpleSAML\Assert\Assert;
@@ -153,7 +153,7 @@ class YubiKey extends Auth\Source
             /**
              * Attempt to log in.
              *
-             * @var \SimpleSAML\Module\authYubiKey\Auth\Source\YubiKey $source
+             * @var \SimpleSAML\Module\authYubikey\Auth\Source\YubiKey $source
              */
             $attributes = $source->login($otp);
         } catch (Error\Error $e) {

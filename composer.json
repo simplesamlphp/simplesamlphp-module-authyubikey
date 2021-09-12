@@ -21,7 +21,7 @@
     },
     "autoload": {
         "psr-4": {
-            "SimpleSAML\\modules\\yubikey\\": "lib/"
+            "SimpleSAML\\Module\\authYubikey\\": "lib/"
         }
     },
     "autoload-dev": {

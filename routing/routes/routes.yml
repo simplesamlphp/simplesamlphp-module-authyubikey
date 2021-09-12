@@ -1,0 +1,3 @@
+authyubikey-main:
+    path:       /login
+    defaults:   { _controller: 'SimpleSAML\Module\authyubikey\Controller\Yubikey::main' }

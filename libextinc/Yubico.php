@@ -121,8 +121,9 @@ class Auth_Yubico
         // Support https
         $url = "https://api.yubico.com/wsapi/verify?" . $parameters;
 
+        $httpUtils = new \SimpleSAML\Utils\HTTP();
         /** @var string $responseMsg */
-        $responseMsg = \SimpleSAML\Utils\HTTP::fetch($url);
+        $responseMsg = $httpUtils->fetch($url);
 
         $out = [];
         if (preg_match("/status=([a-zA-Z0-9_]+)/", $responseMsg, $out) !== 1) {
