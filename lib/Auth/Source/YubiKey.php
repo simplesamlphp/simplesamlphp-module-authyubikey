@@ -113,7 +113,7 @@ class YubiKey extends Auth\Source
         $state[self::AUTHID] = $this->authId;
 
         $id = Auth\State::saveState($state, self::STAGEID);
-        $url = Module::getModuleURL('authYubiKey/yubikeylogin.php');
+        $url = Module::getModuleURL('authYubikey/login');
         $httpUtils = new Utils\HTTP();
         $httpUtils->redirectTrustedURL($url, ['AuthState' => $id]);
     }
