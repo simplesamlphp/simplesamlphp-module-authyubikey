@@ -38,11 +38,11 @@ use SimpleSAML\Utils;
  *
  * Configure it by adding an entry to config/authsources.php such as this:
  *
- *    'yubikey' => array(
+ *    'yubikey' => [
  *        'authYubiKey:YubiKey',
  *        'id' => 997,
  *        'key' => 'b64hmackey',
- *    ),
+ *    ],
  *
  * To generate your own client id/key you will need one YubiKey, and then
  * go to http://yubico.com/developers/api/
