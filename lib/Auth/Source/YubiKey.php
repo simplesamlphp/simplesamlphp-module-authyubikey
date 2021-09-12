@@ -3,35 +3,19 @@
 namespace SimpleSAML\Module\authYubiKey\Auth\Source;
 
 use Exception;
+use GuzzleHttp\Client as GuzzleClient;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\Auth;
 use SimpleSAML\Error;
 use SimpleSAML\Logger;
 use SimpleSAML\Module;
 use SimpleSAML\Utils;
-
-/*
- * Copyright (C) 2009  Andreas Åkre Solberg <andreas.solberg@uninett.no>
- * Copyright (C) 2009  Simon Josefsson <simon@yubico.com>.
- *
- * This file is part of SimpleSAMLphp
- *
- * SimpleSAMLphp is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public License
- * as published by the Free Software Foundation; either version 3 of
- * the License, or (at your option) any later version.
- *
- * SimpleSAMLphp is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License License along with GNU SASL Library; if not, write to the
- * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
- * Boston, MA 02110-1301, USA.
- *
- */
+use Surfnet\YubikeyApiClient\Crypto\RandomNonceGenerator;
+use Surfnet\YubikeyApiClient\Crypto\Signer;
+use Surfnet\YubikeyApiClient\Http\ServerPoolClient;
+use Surfnet\YubikeyApiClient\Otp;
+use Surfnet\YubikeyApiClient\Service\OtpVerificationResult;
+use Surfnet\YubikeyApiClient\Service\VerificationService;
 
 /**
  * YubiKey authentication module, see http://www.yubico.com/developers/intro/
@@ -39,7 +23,7 @@ use SimpleSAML\Utils;
  * Configure it by adding an entry to config/authsources.php such as this:
  *
  *    'yubikey' => [
- *        'authYubiKey:YubiKey',
+ *        'authYubikey:YubiKey',
  *        'id' => 997,
  *        'key' => 'b64hmackey',
  *    ],
@@ -47,7 +31,7 @@ use SimpleSAML\Utils;
  * To generate your own client id/key you will need one YubiKey, and then
  * go to http://yubico.com/developers/api/
  *
- * @package SimpleSAMLphp
+ * @package simplesamlphp/simplesamlphp-module-authYubikey
  */
 
 class YubiKey extends Auth\Source
@@ -203,27 +187,36 @@ class YubiKey extends Auth\Source
      * @param string $otp
      * @return array Associative array with the users attributes.
      */
-    protected function login(string $otp): array
+    protected function login(string $userInputOtp): array
     {
-        require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/libextinc/Yubico.php';
+        $service = new VerificationService(
+            new ServerPoolClient(new GuzzleClient()),
+            new RandomNonceGenerator(),
+            new Signer($this->yubi_key),
+            $this->yubi_id
+        );
 
-        $yubi = new \Auth_Yubico($this->yubi_id, $this->yubi_key);
-        try {
-            $yubi->verify($otp);
-            $uid = self::getYubiKeyPrefix($otp);
-            $attributes = ['uid' => [$uid]];
-        } catch (Exception $e) {
-            Logger::info(
-                'YubiKey:' . $this->authId . ': Validation error (otp ' . $otp . '), debug output: '
-                . $yubi->getLastResponse()
-            );
-            throw new Error\Error('WRONGUSERPASS', $e);
+        if (!Otp::isValid($userInputOtp)) {
+            throw new Error\Exception('User-entered OTP string is not valid.');
         }
 
-        Logger::info(
-            'YubiKey:' . $this->authId . ': YubiKey otp ' . $otp . ' validated successfully: '
-            . $yubi->getLastResponse()
-        );
-        return $attributes;
+        $otp = Otp::fromString($userInputOtp);
+        $result = $service->verify($otp);
+
+        if ($result->isSuccessful()) {
+            // Yubico verified OTP.
+
+            Logger::info(sprintf(
+                'YubiKey:%s: YubiKey otp %s validated successfully: %s',
+                $this->authId,
+                $userInputOtp,
+                $result::STATUS_OK
+            ));
+
+            $uid = self::getYubiKeyPrefix($userInputOtp);
+            return ['uid' => [$uid]];
+        }
+
+        throw new Error\Error($result->getError());
     }
 }

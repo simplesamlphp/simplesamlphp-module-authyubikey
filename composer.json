@@ -34,7 +34,8 @@
 
         "simplesamlphp/assert": "~0.2.7",
         "simplesamlphp/composer-module-installer": "~1.1",
-        "simplesamlphp/simplesamlphp": "dev-master"
+        "simplesamlphp/simplesamlphp": "dev-master",
+        "surfnet/yubikey-api-client": "^2.1"
     },
     "require-dev": {
         "simplesamlphp/simplesamlphp-test-framework": "^1.1.0"
