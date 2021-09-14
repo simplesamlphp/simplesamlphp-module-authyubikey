@@ -94,7 +94,6 @@ class Yubikey
             }
         }
 
-        $t->data['autofocus'] = 'otp';
         $t->data['errorCode'] = $errorCode;
         $t->data['stateParams'] = ['AuthState' => $stateId];
 
