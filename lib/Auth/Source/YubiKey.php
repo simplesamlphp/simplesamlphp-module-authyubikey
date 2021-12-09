@@ -1,6 +1,6 @@
 <?php
 
-namespace SimpleSAML\Module\authYubiKey\Auth\Source;
+namespace SimpleSAML\Module\authYubikey\Auth\Source;
 
 use Exception;
 use GuzzleHttp\Client as GuzzleClient;
@@ -97,7 +97,7 @@ class YubiKey extends Auth\Source
         $state[self::AUTHID] = $this->authId;
 
         $id = Auth\State::saveState($state, self::STAGEID);
-        $url = Module::getModuleURL('authYubiKey/yubikeylogin.php');
+        $url = Module::getModuleURL('authYubikey/login');
         $httpUtils = new Utils\HTTP();
         $httpUtils->redirectTrustedURL($url, ['AuthState' => $id]);
     }
@@ -137,7 +137,7 @@ class YubiKey extends Auth\Source
             /**
              * Attempt to log in.
              *
-             * @var \SimpleSAML\Module\authYubiKey\Auth\Source\YubiKey $source
+             * @var \SimpleSAML\Module\authYubikey\Auth\Source\YubiKey $source
              */
             $attributes = $source->login($otp);
         } catch (Error\Error $e) {
