@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace SimpleSAML\Module\authYubikey\Controller;
+namespace SimpleSAML\Module\authYubiKey\Controller;
 
 use SimpleSAML\Configuration;
 use SimpleSAML\Error;
-use SimpleSAML\Module\authYubikey\Auth\Source;
+use SimpleSAML\Module\authYubiKey\Auth\Source;
 use SimpleSAML\Session;
 use SimpleSAML\XHTML\Template;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,8 +27,8 @@ class Yubikey
     protected Session $session;
 
     /**
-     * @var \SimpleSAML\Module\authYubikey\Auth\Source\YubiKey|string
-     * @psalm-var \SimpleSAML\Module\authYubikey\Auth\Source\YubiKey|class-string
+     * @var \SimpleSAML\Module\authYubiKey\Auth\Source\YubiKey|string
+     * @psalm-var \SimpleSAML\Module\authYubiKey\Auth\Source\YubiKey|class-string
      */
     protected $yubikey = Source\YubiKey::class;
 
@@ -53,9 +53,9 @@ class Yubikey
 
 
     /**
-     * Inject the \SimpleSAML\Module\authYubikey\Auth\Source\YubiKey dependency.
+     * Inject the \SimpleSAML\Module\authYubiKey\Auth\Source\YubiKey dependency.
      *
-     * @param \SimpleSAML\Module\authYubikey\Auth\Source\YubiKey $yubikey
+     * @param \SimpleSAML\Module\authYubiKey\Auth\Source\YubiKey $yubikey
      */
     public function setYubikey(Source\Yubikey $yubikey): void
     {
@@ -74,7 +74,7 @@ class Yubikey
             throw new Error\BadRequest('Missing AuthState parameter.');
         }
 
-        $t = new Template($this->config, 'authYubikey:yubikeylogin.twig');
+        $t = new Template($this->config, 'authYubiKey:yubikeylogin.twig');
 
         $errorCode = null;
         $otp = $request->get('otp');

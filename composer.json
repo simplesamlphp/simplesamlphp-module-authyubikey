@@ -17,11 +17,11 @@
         }
     },
     "extra": {
-        "ssp-mixedcase-module-name": "authYubikey"
+        "ssp-mixedcase-module-name": "authYubiKey"
     },
     "autoload": {
         "psr-4": {
-            "SimpleSAML\\Module\\authYubikey\\": "lib/"
+            "SimpleSAML\\Module\\authYubiKey\\": "lib/"
         }
     },
     "autoload-dev": {

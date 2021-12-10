@@ -1,6 +1,6 @@
 <?php
 
-namespace SimpleSAML\Module\authYubikey\Auth\Source;
+namespace SimpleSAML\Module\authYubiKey\Auth\Source;
 
 use Exception;
 use GuzzleHttp\Client as GuzzleClient;
@@ -23,7 +23,7 @@ use Surfnet\YubikeyApiClient\Service\VerificationService;
  * Configure it by adding an entry to config/authsources.php such as this:
  *
  *    'yubikey' => [
- *        'authYubikey:YubiKey',
+ *        'authYubiKey:YubiKey',
  *        'id' => 997,
  *        'key' => 'b64hmackey',
  *    ],
@@ -31,7 +31,7 @@ use Surfnet\YubikeyApiClient\Service\VerificationService;
  * To generate your own client id/key you will need one YubiKey, and then
  * go to http://yubico.com/developers/api/
  *
- * @package simplesamlphp/simplesamlphp-module-authYubikey
+ * @package simplesamlphp/simplesamlphp-module-authyubikey
  */
 
 class YubiKey extends Auth\Source
@@ -97,7 +97,7 @@ class YubiKey extends Auth\Source
         $state[self::AUTHID] = $this->authId;
 
         $id = Auth\State::saveState($state, self::STAGEID);
-        $url = Module::getModuleURL('authYubikey/login');
+        $url = Module::getModuleURL('authYubiKey/login');
         $httpUtils = new Utils\HTTP();
         $httpUtils->redirectTrustedURL($url, ['AuthState' => $id]);
     }
@@ -137,7 +137,7 @@ class YubiKey extends Auth\Source
             /**
              * Attempt to log in.
              *
-             * @var \SimpleSAML\Module\authYubikey\Auth\Source\YubiKey $source
+             * @var \SimpleSAML\Module\authYubiKey\Auth\Source\YubiKey $source
              */
             $attributes = $source->login($otp);
         } catch (Error\Error $e) {

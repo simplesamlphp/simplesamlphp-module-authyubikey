@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SimpleSAML\Module\authYubikey\Auth\Process;
+namespace SimpleSAML\Module\authYubiKey\Auth\Process;
 
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\Auth;

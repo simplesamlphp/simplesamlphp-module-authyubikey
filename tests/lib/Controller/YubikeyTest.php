@@ -2,22 +2,21 @@
 
 declare(strict_types=1);
 
-namespace SimpleSAML\Test\Module\authYubikey\Controller;
+namespace SimpleSAML\Test\Module\authYubiKey\Controller;
 
 use PHPUnit\Framework\TestCase;
-//use SimpleSAML\Auth\State as AuthState;
 use SimpleSAML\Configuration;
 use SimpleSAML\Error;
-use SimpleSAML\Module\authYubikey\Auth\Source\YubiKey;
-use SimpleSAML\Module\authYubikey\Controller;
+use SimpleSAML\Module\authYubiKey\Auth\Source\YubiKey;
+use SimpleSAML\Module\authYubiKey\Controller;
 use SimpleSAML\Session;
 use SimpleSAML\XHTML\Template;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Set of tests for the controllers in the "authyubikey" module.
+ * Set of tests for the controllers in the "authYubiKey" module.
  *
- * @covers \SimpleSAML\Module\authYubikey\Controller\Yubikey
+ * @covers \SimpleSAML\Module\authYubiKey\Controller\Yubikey
  */
 class YubikeyTest extends TestCase
 {
@@ -37,7 +36,7 @@ class YubikeyTest extends TestCase
 
         $this->config = Configuration::loadFromArray(
             [
-                'module.enable' => ['authYubikey' => true],
+                'module.enable' => ['authYubiKey' => true],
             ],
             '[ARRAY]',
             'simplesaml'
@@ -113,7 +112,7 @@ class YubikeyTest extends TestCase
         );
 
         $c = new Controller\Yubikey($this->config, $this->session);
-        $c->setYubikey(new class (['AuthId' => 'authYubikey'], []) extends YubiKey {
+        $c->setYubikey(new class (['AuthId' => 'authYubiKey'], []) extends YubiKey {
             public static function handleLogin(string $stateId, string $otp): ?string
             {
                 return 'WRONGUSERPASS';
