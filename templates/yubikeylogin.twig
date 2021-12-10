@@ -2,11 +2,11 @@
 {% extends "base.twig" %}
 
 {% block preload %}
-    <link rel="stylesheet" href="{{ asset('css/yubikey.css', 'authyubikey') }}">
+    <link rel="stylesheet" href="{{ asset('css/yubikey.css', 'authYubiKey') }}">
 {% endblock %}
 
 {% block postload %}
-    <script src="{{ asset('js/autofocus.js', 'authyubikey') }}"></script>
+    <script src="{{ asset('js/autofocus.js', 'authYubiKey') }}"></script>
 {% endblock %}
 
 {% block content %}
@@ -24,8 +24,8 @@
     </div>
     {% endif %}
 
-    <img id="authyubikey_logo" src="{{ asset('img/logo.jpg', 'authyubikey') }}" alt="">
-    <img id="yubikey" src="{{ asset('img/yubikey.jpg', 'authyubikey') }}" alt="YubiKey">
+    <img id="authyubikey_logo" src="{{ asset('img/logo.jpg', 'authYubiKey') }}" alt="">
+    <img id="yubikey" src="{{ asset('img/yubikey.jpg', 'authYubiKey') }}" alt="YubiKey">
 
     <h2>{{ pagetitle }}</h2>
     <form action="?" method="post" name="f">
