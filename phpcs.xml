@@ -7,19 +7,8 @@
     </description>
 
     <file>lib</file>
-    <file>libextinc</file>
     <file>tests</file>
 
     <!-- This is the rule we inherit from. If you want to exlude some specific rules, see the docs on how to do that -->
     <rule ref="PSR12"/>
-
-    <!-- Ignore files with side effects that we cannot fix -->
-    <rule ref="PSR1.Classes.ClassDeclaration">
-        <exclude-pattern>libextinc/Yubico.php</exclude-pattern>
-    </rule>
-
-    <!-- Ignore files with side effects that we cannot fix -->
-    <rule ref="Squiz.Classes.ValidClassName">
-        <exclude-pattern>libextinc/Yubico.php</exclude-pattern>
-    </rule>
 </ruleset>
