@@ -113,6 +113,9 @@ class YubikeyTest extends TestCase
 
         $c = new Controller\Yubikey($this->config, $this->session);
         $c->setYubikey(new class (['AuthId' => 'authYubiKey'], []) extends YubiKey {
+            public function __construct(array $info, array $config) {
+            }
+
             public static function handleLogin(string $stateId, string $otp): ?string
             {
                 return 'WRONGUSERPASS';

@@ -73,13 +73,11 @@ class YubiKey extends Auth\Source
         // Call the parent constructor first, as required by the interface
         parent::__construct($info, $config);
 
-        if (array_key_exists('id', $config)) {
-            $this->yubi_id = $config['id'];
-        }
+        Assert::keyExists($config, 'id', Error\ConfigurationError::class);
+        Assert::keyExists($config, 'key', Error\ConfigurationError::class);
 
-        if (array_key_exists('key', $config)) {
-            $this->yubi_key = $config['key'];
-        }
+        $this->yubi_id = $config['id'];
+        $this->yubi_key = $config['key'];
     }
 
 
