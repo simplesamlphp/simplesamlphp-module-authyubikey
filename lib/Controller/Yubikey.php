@@ -69,15 +69,16 @@ class Yubikey
      */
     public function main(Request $request): Template
     {
-        $stateId = $request->get('AuthState');
-        if ($stateId === null) {
+        if (!$request->query->has('AuthState')) {
             throw new Error\BadRequest('Missing AuthState parameter.');
         }
+        $stateId = $request->query->all()['AuthState'];
 
+        // attempt to log in
         $t = new Template($this->config, 'authYubiKey:yubikeylogin.twig');
 
         $errorCode = null;
-        $otp = $request->get('otp');
+        $otp = $request->request->has('otp') ? $request->request->all()['otp'] : null;
         if ($otp !== null) {
             // attempt to log in
 
