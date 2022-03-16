@@ -83,14 +83,6 @@ class YubikeyTest extends TestCase
         );
 
         $c = new Controller\Yubikey($this->config, $this->session);
-/**
-        $c->setAuthState(new class () extends Auth\State {
-            public static function loadState(string $id, string $stage, bool $allowMissing = false): ?array
-            {
-                return [];
-            }
-        });
-*/
         $response = $c->main($request);
 
         $this->assertTrue($response->isSuccessful());
@@ -112,7 +104,8 @@ class YubikeyTest extends TestCase
         );
 
         $c = new Controller\Yubikey($this->config, $this->session);
-        $c->setYubikey(new class (['AuthId' => 'authYubiKey'], []) extends YubiKey {
+        $c->setYubikey(new class (['AuthId' => 'authYubiKey'], []) extends YubiKey
+        {
             public function __construct(array $info, array $config) {
             }
 
