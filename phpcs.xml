@@ -6,7 +6,7 @@
         By default it is less stringent about long lines than other coding standards
     </description>
 
-    <file>lib</file>
+    <file>src</file>
     <file>tests</file>
 
     <!-- This is the rule we inherit from. If you want to exlude some specific rules, see the docs on how to do that -->
