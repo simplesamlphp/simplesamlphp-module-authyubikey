@@ -1,0 +1,17 @@
+input#otp {
+  border: 1px solid #ccc;
+  background: #eee;
+  padding: 0.5em;
+  font-size: medium;
+  width: 70%;
+  color: #aaa;
+}
+
+img#authyubikey-logo {
+  float: right;
+}
+
+img#yubikey {
+  clear: right;
+  float: right;
+}
