@@ -57,7 +57,7 @@ class Yubikey
      *
      * @param \SimpleSAML\Module\authYubiKey\Auth\Source\YubiKey $yubikey
      */
-    public function setYubikey(Source\Yubikey $yubikey): void
+    public function setYubikey(Source\YubiKey $yubikey): void
     {
         $this->yubikey = $yubikey;
     }
