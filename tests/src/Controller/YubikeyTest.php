@@ -110,7 +110,7 @@ class YubikeyTest extends TestCase
             {
             }
 
-            public static function handleLogin(string $stateId, string $otp): ?string
+            public static function handleLogin(string $authStateId, string $otp): ?string
             {
                 return 'WRONGUSERPASS';
             }
