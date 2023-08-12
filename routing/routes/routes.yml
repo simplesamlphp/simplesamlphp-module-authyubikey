@@ -5,3 +5,4 @@ authyubikey-main:
   defaults: {
     _controller: 'SimpleSAML\Module\authYubiKey\Controller\Yubikey::main'
   }
+  methods: [GET, POST]
