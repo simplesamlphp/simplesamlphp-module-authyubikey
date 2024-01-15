@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace SimpleSAML\Module\authYubiKey\Auth\Source;
 
-use Exception;
 use GuzzleHttp\Client as GuzzleClient;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\Auth;
@@ -16,7 +15,6 @@ use Surfnet\YubikeyApiClient\Crypto\RandomNonceGenerator;
 use Surfnet\YubikeyApiClient\Crypto\Signer;
 use Surfnet\YubikeyApiClient\Http\ServerPoolClient;
 use Surfnet\YubikeyApiClient\Otp;
-use Surfnet\YubikeyApiClient\Service\OtpVerificationResult;
 use Surfnet\YubikeyApiClient\Service\VerificationService;
 
 /**
