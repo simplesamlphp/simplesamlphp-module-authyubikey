@@ -76,7 +76,7 @@ class Yubikey
 
             /** @psalm-var string $errorCode */
             $errorCode = $this->yubikey::handleLogin($stateId, $otp);
-            $errorCodes = Error\ErrorCodes::getAllErrorCodeMessages();
+            $errorCodes = (new Error\ErrorCodes())->getAllMessages();
 
             if (array_key_exists($errorCode, $errorCodes['title'])) {
                 $t->data['errorTitle'] = $errorCodes['title'][$errorCode];
