@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\Test\Module\authYubiKey\Controller;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\Configuration;
 use SimpleSAML\Error;
@@ -15,9 +16,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Set of tests for the controllers in the "authYubiKey" module.
- *
- * @covers \SimpleSAML\Module\authYubiKey\Controller\Yubikey
  */
+#[CoversClass(Controller\Yubikey::class)]
 class YubikeyTest extends TestCase
 {
     /** @var \SimpleSAML\Configuration */
