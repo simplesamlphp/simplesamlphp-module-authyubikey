@@ -56,10 +56,10 @@ class YubiKey extends Auth\Source
      * The client id/key for use with the Auth_Yubico PHP module.
      * @var string
      */
-    private $yubi_id;
+    private string $yubi_id;
 
     /** @var string */
-    private $yubi_key;
+    private string $yubi_key;
 
 
     /**
