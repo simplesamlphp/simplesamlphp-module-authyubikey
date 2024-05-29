@@ -113,8 +113,11 @@ class YubiKey extends Auth\Source
      * @param string $otp  The one time password entered-
      * @return string|void Error code in the case of an error.
      */
-    public static function handleLogin(string $authStateId, string $otp)
-    {
+    public static function handleLogin(
+        string $authStateId,
+        #[\SensitiveParameter]
+        string $otp,
+    ) {
         /* Retrieve the authentication state. */
         $state = Auth\State::loadState($authStateId, self::STAGEID);
         if (is_null($state)) {
@@ -166,7 +169,7 @@ class YubiKey extends Auth\Source
      * @param string $otp
      * @return string
      */
-    public static function getYubiKeyPrefix(string $otp): string
+    public static function getYubiKeyPrefix(#[\SensitiveParameter] string $otp): string
     {
         $uid = substr($otp, 0, strlen($otp) - self::TOKENSIZE);
         return $uid;
@@ -185,7 +188,7 @@ class YubiKey extends Auth\Source
      * @param string $otp
      * @return array Associative array with the users attributes.
      */
-    protected function login(string $userInputOtp): array
+    protected function login(#[\SensitiveParameter] string $userInputOtp): array
     {
         $service = new VerificationService(
             new ServerPoolClient(new GuzzleClient()),
