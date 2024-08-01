@@ -39,7 +39,7 @@ class YubikeyTest extends TestCase
                 'module.enable' => ['authYubiKey' => true],
             ],
             '[ARRAY]',
-            'simplesaml'
+            'simplesaml',
         );
 
         $this->session = Session::getSessionFromRequest();
@@ -57,7 +57,7 @@ class YubikeyTest extends TestCase
     {
         $request = Request::create(
             '/login',
-            'GET'
+            'GET',
         );
 
         $c = new Controller\Yubikey($this->config, $this->session);
@@ -79,7 +79,7 @@ class YubikeyTest extends TestCase
         $request = Request::create(
             '/login',
             'GET',
-            ['AuthState' => 'abc123']
+            ['AuthState' => 'abc123'],
         );
 
         $c = new Controller\Yubikey($this->config, $this->session);
@@ -100,7 +100,7 @@ class YubikeyTest extends TestCase
         $request = Request::create(
             '/login',
             'GET',
-            ['AuthState' => 'abc123', 'otp' => 'aabbccddeeffgghhiijjkkllmmnnooppqq']
+            ['AuthState' => 'abc123', 'otp' => 'aabbccddeeffgghhiijjkkllmmnnooppqq'],
         );
 
         $c = new Controller\Yubikey($this->config, $this->session);

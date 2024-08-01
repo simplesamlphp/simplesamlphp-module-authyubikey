@@ -8,6 +8,12 @@ use SimpleSAML\Assert\Assert;
 use SimpleSAML\Auth;
 use SimpleSAML\Logger;
 
+use function array_keys;
+use function implode;
+use function sprintf;
+use function strlen;
+use function substr;
+
 /*
  * Copyright (C) 2009  Simon Josefsson <simon@yubico.com>.
  *
@@ -74,13 +80,18 @@ class OTP2YubiPrefix extends Auth\ProcessingFilter
 
         $attributes['yubiPrefix'] = [$identity];
 
-        Logger::info(
-            'OTP2YubiPrefix: otp: ' . $otp . ' identity: ' . $identity . ' (otp keys: '
-            . implode(',', array_keys($otps)) . ')'
-        );
+        Logger::info(sprintf(
+            'OTP2YubiPrefix: otp: %s identity: %s (otp keys: %s)',
+            $otp,
+            $identity,
+            implode(',', array_keys($otps)),
+        ));
 
         unset($attributes['otp']);
 
-        Logger::debug('OTP2YubiPrefix: leaving with attributes: ' . implode(',', array_keys($attributes)));
+        Logger::debug(sprintf(
+            'OTP2YubiPrefix: leaving with attributes: %s',
+            implode(',', array_keys($attributes)),
+        ));
     }
 }

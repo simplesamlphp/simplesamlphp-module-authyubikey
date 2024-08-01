@@ -131,7 +131,7 @@ class YubiKey extends Auth\Source
         Assert::isInstanceOf(
             $source,
             YubiKey::class,
-            'Could not find authentication source with id ' . $state[self::AUTHID]
+            'Could not find authentication source with id ' . $state[self::AUTHID],
         );
 
         try {
@@ -194,7 +194,7 @@ class YubiKey extends Auth\Source
             new ServerPoolClient(new GuzzleClient()),
             new RandomNonceGenerator(),
             new Signer($this->yubi_key),
-            $this->yubi_id
+            $this->yubi_id,
         );
 
         if (!Otp::isValid($userInputOtp)) {
@@ -211,7 +211,7 @@ class YubiKey extends Auth\Source
                 'YubiKey:%s: YubiKey otp %s validated successfully: %s',
                 $this->authId,
                 $userInputOtp,
-                $result::STATUS_OK
+                $result::STATUS_OK,
             ));
 
             $uid = self::getYubiKeyPrefix($userInputOtp);
