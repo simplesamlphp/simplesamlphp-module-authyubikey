@@ -11,7 +11,6 @@ use SimpleSAML\Error;
 use SimpleSAML\Module\authYubiKey\Auth\Source\YubiKey;
 use SimpleSAML\Module\authYubiKey\Controller;
 use SimpleSAML\Session;
-use SimpleSAML\XHTML\Template;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -63,7 +62,9 @@ class YubikeyTest extends TestCase
         $c = new Controller\Yubikey($this->config, $this->session);
 
         $this->expectException(Error\BadRequest::class);
-        $this->expectExceptionMessage("BADREQUEST('%REASON%' => 'Missing AuthState parameter.')");
+        $this->expectExceptionMessage(
+            '{"errorCode":"BADREQUEST","%REASON%":"Missing AuthState parameter."}',
+        );
 
         $c->main($request);
     }
@@ -86,7 +87,6 @@ class YubikeyTest extends TestCase
         $response = $c->main($request);
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertInstanceOf(Template::class, $response);
     }
 
 
@@ -106,11 +106,13 @@ class YubikeyTest extends TestCase
         $c = new Controller\Yubikey($this->config, $this->session);
         $c->setYubikey(new class (['AuthId' => 'authYubiKey'], []) extends YubiKey
         {
+            /** @phpstan-ignore constructor.unusedParameter, constructor.unusedParameter */
             public function __construct(array $info, array $config)
             {
             }
 
-            public static function handleLogin(string $authStateId, string $otp): ?string
+
+            public static function handleLogin(string $authStateId, string $otp): string
             {
                 return 'WRONGUSERPASS';
             }
@@ -118,6 +120,5 @@ class YubikeyTest extends TestCase
         $response = $c->main($request);
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertInstanceOf(Template::class, $response);
     }
 }

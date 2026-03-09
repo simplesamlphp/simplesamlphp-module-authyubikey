@@ -63,7 +63,7 @@ class OTP2YubiPrefix extends Auth\ProcessingFilter
      * Filter out YubiKey 'otp' attribute and replace it with
      * a 'yubiPrefix' attribute that leaves out the dynamic part.
      *
-     * @param array &$state  The state we should update.
+     * @param array<mixed> &$state  The state we should update.
      */
     public function process(array &$state): void
     {

@@ -39,18 +39,19 @@ class YubiKey extends Auth\Source
     /**
      * The string used to identify our states.
      */
-    public const STAGEID = '\SimpleSAML\Module\authYubiKey\Auth\Source\YubiKey.state';
+    public const string STAGEID = '\SimpleSAML\Module\authYubiKey\Auth\Source\YubiKey.state';
 
     /**
      * The number of characters of the OTP that is the secure token.
      * The rest is the user id.
      */
-    public const TOKENSIZE = 32;
+    public const int TOKENSIZE = 32;
 
     /**
      * The key of the AuthId field in the state.
      */
-    public const AUTHID = '\SimpleSAML\Module\authYubiKey\Auth\Source\YubiKey.AuthId';
+    public const string AUTHID = '\SimpleSAML\Module\authYubiKey\Auth\Source\YubiKey.AuthId';
+
 
     /**
      * The client id/key for use with the Auth_Yubico PHP module.
@@ -65,8 +66,8 @@ class YubiKey extends Auth\Source
     /**
      * Constructor for this authentication source.
      *
-     * @param array $info  Information about this authentication source.
-     * @param array $config  Configuration.
+     * @param array<mixed> $info  Information about this authentication source.
+     * @param array<mixed> $config  Configuration.
      */
     public function __construct(array $info, array $config)
     {
@@ -87,7 +88,7 @@ class YubiKey extends Auth\Source
      * This function saves the information about the login, and redirects to a
      * login page.
      *
-     * @param array &$state  Information about the current authentication.
+     * @param array<mixed> &$state  Information about the current authentication.
      */
     public function authenticate(array &$state): void
     {
@@ -120,9 +121,6 @@ class YubiKey extends Auth\Source
     ) {
         /* Retrieve the authentication state. */
         $state = Auth\State::loadState($authStateId, self::STAGEID);
-        if (is_null($state)) {
-            throw new Error\NoState();
-        }
 
         /* Find authentication source. */
         Assert::keyExists($state, self::AUTHID);
@@ -158,8 +156,6 @@ class YubiKey extends Auth\Source
 
         $state['Attributes'] = $attributes;
         Auth\Source::completeAuth($state);
-
-        assert(false);
     }
 
 
@@ -185,8 +181,7 @@ class YubiKey extends Auth\Source
      *
      * Note that both the username and the password are UTF-8 encoded.
      *
-     * @param string $otp
-     * @return array Associative array with the users attributes.
+     * @return array<mixed> Associative array with the users attributes.
      */
     protected function login(#[\SensitiveParameter] string $userInputOtp): array
     {
